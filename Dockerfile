@@ -1,4 +1,4 @@
-FROM java:6-jdk
+FROM maven:latest
 RUN mkdir /opt/app
 COPY *.java /opt/app
 COPY *.xml /opt/app
