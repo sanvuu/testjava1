@@ -19,7 +19,7 @@ jobs:
       run: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
 
     - name: Docker Build
-      run: docker build . -t ${DOCKER_USERNAME}/testpy4:${IMAGE_TAG}
+      run: docker build . -t ${DOCKER_USERNAME}/testjava1:${IMAGE_TAG}
 
     - name: docker push
-      run: docker push ${DOCKER_USERNAME}/testpy4:${IMAGE_TAG}
+      run: docker push ${DOCKER_USERNAME}/testjava1:${IMAGE_TAG}
