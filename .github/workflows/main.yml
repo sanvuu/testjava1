@@ -1,0 +1,28 @@
+name: Java application
+
+env:
+  DOCKER_USERNAME: sanvu
+  DOCKER_PASSWORD: ${{ secrets.PASS1 }}
+  IMAGE_TAG: ${{ github.sha }}
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Docker Login
+      run: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+
+    - name: Docker Build
+      run: docker build . -t ${DOCKER_USERNAME}/testjava1:${IMAGE_TAG}
+
+    - name: docker push
+      run: docker push ${DOCKER_USERNAME}/testjava1:${IMAGE_TAG}
