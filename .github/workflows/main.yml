@@ -32,7 +32,7 @@ jobs:
           name: artifact-java
           path: ./target/*.jar
 
-build_push_image:
+  build_push_image:
     needs: build_artifact
     runs-on: ubuntu-latest
 
