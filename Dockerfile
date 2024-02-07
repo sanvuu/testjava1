@@ -1,5 +1,4 @@
-FROM maven:latest
-RUN mkdir /opt/app
-COPY *.java /opt/app
-COPY *.xml /opt/app
-CMD ["java", "-java", "/opt/app/HelloController.java"]
+FROM openjdk:11-jre-slim
+WORKDIR /test/java
+COPY ./target/*.jar ./application.jar
+CMD ["java", "-java", "./application.jar"]
