@@ -11,15 +11,47 @@ on:
       - main
 
 jobs:
-  build:
+  build_artifact:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Docker Login
-      run: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Docker Build
-      run: docker build . -t ${DOCKER_USERNAME}/testjava1:${IMAGE_TAG}
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
 
-    - name: docker push
-      run: docker push ${DOCKER_USERNAME}/testjava1:${IMAGE_TAG}
+      - name: Build jar
+        run: mvn clean package
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: artifact-java
+          path: ./target/*.jar
+
+build_push_image:
+    needs: build_artifact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: artifact-java
+          path: ./target/*.jar
+
+      - uses: actions/checkout@v4
+      - name: Docker Login
+        run: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+
+      - name: Docker Build
+        run: docker build . -t ${DOCKER_USERNAME}/testjava1:${IMAGE_TAG}
+
+      - name: docker push
+        run: docker push ${DOCKER_USERNAME}/testjava1:${IMAGE_TAG}
