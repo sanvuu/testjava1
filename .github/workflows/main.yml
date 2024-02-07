@@ -45,7 +45,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: artifact-java
-          path: ./target/*.jar
+          path: ./app.jar
 
       - uses: actions/checkout@v4
       - name: Docker Login
