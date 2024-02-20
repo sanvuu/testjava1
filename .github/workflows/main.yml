@@ -45,7 +45,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: artifact-java
-          path: ./my-java-app-1.0-SNAPSHOT-2.jar
+          path: ./*.jar
 
       - uses: actions/checkout@v4
       - name: Docker Login
