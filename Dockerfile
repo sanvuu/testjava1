@@ -1,4 +1,7 @@
 FROM openjdk:11-jre-slim
+#ARG JAR_FILE=target/find-links.jar
+#ARG JAR_LIB_FILE=target/lib
 WORKDIR /test/java
-COPY ./target/*.jar ./application.jar
-CMD ["java", "-java", "./application.jar"]
+COPY ./*.jar ./application.jar
+##ADD ${JAR_LIB_FILE} lib/
+ENTRYPOINT ["java", "-jar", "./application.jar"]
